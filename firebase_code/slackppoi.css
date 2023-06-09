@@ -1,0 +1,7 @@
+.container{
+    display: flex;
+}
+
+#threadList{
+    flex-basis: 200px;
+}

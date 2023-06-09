@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="threadDetail">
+      <div id="output" style="overflow: auto; height: 300px"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        push,
+        set,
+        onChildAdded,
+        remove,
+        onChildRemoved,
+      } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDG8DfVplUZh5EVXGVtb-zHgonTbxsOrMg",
+        authDomain: "gsdev0603-2dd0d.firebaseapp.com",
+        projectId: "gsdev0603-2dd0d",
+        storageBucket: "gsdev0603-2dd0d.appspot.com",
+        messagingSenderId: "573323727527",
+        appId: "1:573323727527:web:2f5a9329704f858d038182",
+      };
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app); //RealtimeDBに接続
+      let dbRef = ref(db, "task"); //RealtimeDB内の"chat"を使う
+
+      //最初にデータ取得＆onSnapshotでリアルタイムにデータを取得
+      onChildAdded(dbRef, function (data) {
+        console.log("onChildAdded");
+        const msg = data.val();
+        const key = data.key;
+        let h = "<p>";
+        h += "name: " + msg.uname;
+        h += "<br>";
+        h += msg.text;
+        h += "</p>";
+        $("#output").append(h);
+      });
+    </script>
+  </body>
+</html>
